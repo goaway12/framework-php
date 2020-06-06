@@ -50,7 +50,7 @@
 		</thead>
 		<?php foreach ($horses as $horse){ ?>
 			<tr>
-				<td><a class = "text-danger" href="<?= URL?>home/deletehorse/<?= $horse['id']; ?>"><i class="fas fa-times"></i></a> <a class = "text-info" href = "<?= URL?>home/horse/<?= $horse['id']; ?>" type = "button"><i class="fas fa-info-circle"></i></a> <?= $horse['name'] ?> </td>
+				<td><a class = "text-danger" href="<?= URL?>home/deletehorse/<?= $horse['id']; ?>"><i class="fas fa-times"></i></a> <a class = "text-info" href = "<?= URL?>home/updatehorse/<?= $horse['id']; ?>" type = "button"><i class="fas fa-edit"></i></i></a> <?= $horse['horseName'] ?> </td>
 				<td><?= $horse['age'] ?> </td>
 				<td><?= $horse['race'] ?> </td>
 				<td><?= $horse['height'] ?> cm</td>

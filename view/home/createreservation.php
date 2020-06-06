@@ -17,7 +17,7 @@
         <div class="col-sm-10">
             <select name="horse_id">
             <?php foreach($horses as $horse){?>
-                <option value="<?= htmlentities($horse["id"])?>"><?= htmlentities($horse["name"])?>
+                <option value="<?= htmlentities($horse["id"])?>"><?= htmlentities($horse["horseName"])?>
                 <?php if ($horse['height'] > 1.47){
 					echo '(Paard)';
 					} else { 
@@ -26,6 +26,12 @@
                         </option>
             <?php } ?>
             </select>
+        </div>
+
+            <label class="col-sm-2 col-form-label">Tijd:</label>
+            <div class="col-sm-10">
+            <input type="time" name="time"> <span class="text-danger"><?php echo $timeErr;?></span>
+            </div>
         </div>
         <input class = "mb-3 btn btn-info" type="submit" value = "Inplannen">
     </form>   

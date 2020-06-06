@@ -160,6 +160,29 @@ function createHorse($data){
     }
     $conn = null;
  }
+ function updateHorseById($data){
+    try {
+        $conn = openDatabaseConnection();
+        $name = $data['name'];
+        $race = $data['race'];
+		$age = $data['age'];
+		$height = $data['height'];
+        $id = $data['id'];
+        $stmt = $conn->prepare("UPDATE customers SET name = :name, race = :race, age = :age, height = :height WHERE id = :id");
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":race", $race);
+		$stmt->bindParam(":age", $age);
+		$stmt->bindParam(":height", $height);
+        $stmt->bindParam(":id", $id);
+
+	    $stmt->execute();
+    }
+    catch(PDOException $e){
+
+        echo "Connection failed: " . $e->getMessage();
+    }
+    $conn = null;
+ }
 
  function deleteHorseById($id){
     try {
@@ -180,11 +203,31 @@ function createHorse($data){
 
 // VANAF HIER ALLES VOOR RESERVERINGEN
 
- function getAllReservations(){
+ function getAllReservations($id){
     try {
 
         $conn = openDatabaseConnection();
-        $stmt = $conn->prepare("SELECT * FROM reservations");
+        $stmt = $conn->prepare("SELECT horse_id, time FROM reservations WHERE customer_id = :id");
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+  
+    }
+
+    catch(PDOException $e){
+
+        echo "Connection failed: " . $e->getMessage();
+    }
+    $conn = null;
+    return $result;
+ }
+
+ function getReservation($id){
+    try {
+
+        $conn = openDatabaseConnection();
+        $stmt = $conn->prepare("SELECT * FROM reservations WHERE id = :id");
+        $stmt->bindParam(":id", $id);
         $stmt->execute();
         $result = $stmt->fetchAll();
   
@@ -203,9 +246,11 @@ function createHorse($data){
         $conn = openDatabaseConnection();
         $customer_id = $data['customer_id'];
         $horse_id = $data['horse_id'];
-        $stmt = $conn->prepare("INSERT INTO reservations (customer_id, horse_id) VALUES (:customer_id, :horse_id)");
+        $time = $data['time'];
+        $stmt = $conn->prepare("INSERT INTO reservations (customer_id, horse_id, time) VALUES (:customer_id, :horse_id, :time)");
         $stmt->bindParam(":customer_id", $customer_id);
         $stmt->bindParam(":horse_id", $horse_id);
+        $stmt->bindParam(":time", $time);
 
 	    $stmt->execute();
     }

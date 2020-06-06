@@ -20,7 +20,6 @@
 			<a href="<?= URL ?>home/createcust" class="btn btn-info">Bezoekers</a>
 			<a href="<?= URL ?>home/index" class="btn btn-info">Paarden en pony's</a>
 			<a href="<?= URL ?>home/createreservation" class="btn btn-info">Maak reservering</a>
-			<a href="<?= URL ?>home/reservations" class="btn btn-info">Reserveringen</a>
 			
         </div>
     </div>

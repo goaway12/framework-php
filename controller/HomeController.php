@@ -6,7 +6,8 @@ require(ROOT . "model/HomeModel.php");
 
 function customer($id){
     $customer = getCustomer($id);
-    render("home/customer", ['customer' => $customer]);
+    $reservations = getAllReservations($id);
+    render("home/customer", ['customer' => $customer, 'reservations' => $reservations]);
 }
 
 function createCust(){
@@ -134,6 +135,28 @@ function storeHorse(){
 		['horses' => $horses, 'nameErr' => $nameErr, 'raceErr' => $raceErr, 'ageErr' => $ageErr, 'heightErr' => $heightErr]);
 }
 
+function updateHorse($id){
+    $horse = getHorse($id);
+    render("home/updatehorse", ['horse' => $horse]);
+}
+
+function editHorse(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+		$data = array(
+            'name' => $_POST['name'],
+            'race' => $_POST['race'],
+            'age' => $_POST['age'],
+            'height' => $_POST['height']
+        );
+        $id = $_POST['id'];
+
+		updateHorseById($data);
+		header('Location: index');
+		exit;
+    }
+
+}
+
 function deleteHorse($id){
 
     $horse = getHorse($id);
@@ -158,15 +181,10 @@ function storeReservation(){
     $data = array(
         'customer_id' => $_POST['customer_id'],
         'horse_id' => $_POST['horse_id'],
+        'time' => $_POST['time']
     );
     createReser($data);
 
     $horses = getAllHorses();
     render("home/index", ['horses' => $horses]);
-}
-
-function reservations(){
-	render("home/reservations", array(
-		'reservations' => getAllReservations()
-	));
 }
